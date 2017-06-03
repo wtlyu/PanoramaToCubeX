@@ -1,0 +1,12 @@
+======== test for 2k (2048 × 1024) picture ========
+cpu time 0.311445s
+cuda time 0.310888s
+======== test for 4k (4096 × 2048) picture ========
+cpu time 1.263972s
+cuda time 0.457165s
+======== test for 8k (8192 × 4096) picture ========
+cpu time 5.094330s
+cuda time 0.646269s
+======== test for 16k (16384 × 8192) picture ========
+cpu time 20.477008s
+cuda time 1.667253s

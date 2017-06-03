@@ -1,0 +1,10 @@
+======== test for thread_pre_block = 32 ========
+cuda time 1.581090s
+======== test for thread_pre_block = 64 ========
+cuda time 1.595847s
+======== test for thread_pre_block = 128 ========
+cuda time 1.575221s
+======== test for thread_pre_block = 256 ========
+cuda time 1.622817s
+======== test for thread_pre_block = 512 ========
+cuda time 1.694060s
