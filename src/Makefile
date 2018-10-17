@@ -6,6 +6,3 @@ convert_cpu: ../bin/convert_cpu
 	g++ cpu.cpp -o ../bin/convert_cpu $(LIBOPENCV)
 
 all: convert_cpu convert_cuda
-
-clean:
-	rm 2048
