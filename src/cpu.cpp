@@ -1,10 +1,13 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
+#include <opencv2/highgui.hpp>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <cmath>
 #include <ctime>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/core/core_c.h>
 
 #ifndef M_PI
 #define M_PI       3.14159265358979323846  /* pi */
@@ -23,17 +26,20 @@
 using namespace cv;
 
 IplImage* readImage(char *imageName) {
-	IplImage* tergetMat = cvLoadImage(imageName, CV_LOAD_IMAGE_COLOR);
+       Mat input = cv::imread(imageName,IMREAD_COLOR);
+       IplImage pBinary = IplImage(input);
+       IplImage* targetMat = cvCloneImage(&pBinary);
 
-	if(tergetMat == NULL)
+	if(targetMat == NULL)
 		fprintf(stderr, "cvLoadImage failed!");
 
-	return tergetMat;
+	return targetMat;
 }
 
 int writeImage(char *imageName, IplImage *image) {
-	int ret = cvSaveImage(imageName, image);
+        Mat img = cv::cvarrToMat(image);
 
+        bool ret = cv::imwrite(imageName,img);
 	if(!ret)
 		fprintf(stderr, "cvSaveImage failed!");
 
@@ -236,7 +242,7 @@ int mainPrecess(IplImage *inImageMat, IplImage **outImageMat) {
 	unsigned char *outImageArray = (unsigned char *)malloc(sizeof(unsigned char) * outImageWidth * outImageHeight * 3);
 
 	// Flush output array as black color
-	memset(outImageArray, 0, outImageWidth * outImageHeight);
+	memset(outImageArray, 0, outImageWidth * outImageHeight * 3);
 
 	int ret = convertWithCPU(outBlockWidth, inImageArray, outImageArray);
 
@@ -284,8 +290,9 @@ int main(int argc, char** argv) {
 
 	printf("cpu time %fs\n", (double)(stop_time - start_time) / CLOCKS_PER_SEC);
 
+
 	ret = writeImage(outImageName, outImageMat);
-	if (ret != 0) {
+	if (ret) {
 		fprintf(stderr, "writeImage failed!");
 		return 1;
 	}
